@@ -1,35 +1,10 @@
 #include <iostream>
 #include <omp.h>
 #include <chrono>
+#include <benchmark/benchmark.h>
 
 namespace ch = std::chrono;
 #define NUMERO_ITERACIONES 1000000000
-/*int main() {
-
-    #pragma omp parallel default(none)
-    {
-        int nthreads = omp_get_num_threads();
-        int thread_id = omp_get_thread_num();
-
-        std::printf("Hello OpenMP\n");
-        std::printf("I have %d thread(s) and my thread_is is %d\n", nthreads, thread_id);
-    }
-
-    #pragma omp parallel default(none)
-    {
-        if (omp_get_thread_num()==0){
-            std::printf("I have %d proc(s)\n", omp_get_num_procs());
-            std::printf("I have %d thread(s)\n", omp_get_num_threads());
-        }
-
-        int thread_id = omp_get_thread_num();
-
-        std::printf("My thread_id is %d\n", thread_id);
-
-    }
-
-    return 0;
-}*/
 
 double pi_serial(){
     double respuesta = 0.0;
@@ -80,16 +55,84 @@ double pi_omp1(){
     return respuesta;
 }
 
-int main(){
-    double pi1;
-    auto start = ch::high_resolution_clock::now();
+double pi_omp1_parallelFor(){
+
+    int numero_hilos = 0;
+
+    #pragma omp parallel
     {
-        pi1 = pi_omp1();
+        #pragma omp master
+        numero_hilos = omp_get_num_threads();
+    };
+
+    std::printf("Thread count: %d\n", numero_hilos);
+
+    double sumas_paricales[numero_hilos];
+
+    #pragma omp parallel shared(sumas_paricales)
+    {
+        int thread_id = omp_get_thread_num();
+
+        #pragma omp for
+        for (long i =0; i <= NUMERO_ITERACIONES;i++){
+            if (i%2==0){
+                sumas_paricales[thread_id] += 4.0/(2.0*i+1.0);
+            }else{
+                sumas_paricales[thread_id] -= 4.0/(2.0*i+1.0);
+            }
+        }
+    };
+
+    double respuesta = 0;
+    for (int i = 0; i < numero_hilos; i++) {
+        respuesta = respuesta + sumas_paricales[i];
     }
-    auto end = ch::high_resolution_clock::now();
-    ch::duration<double,std::milli> duracion = end-start;
+    return respuesta;
+}
 
-    std::printf("Tiempo serial: %lf, pi=%.10lf\n", duracion.count(), pi1);
+static void BM_piSerial(benchmark::State& state){
+    double value;
+    for (auto _ : state) {
+        value = pi_serial();
+    }
+    std::printf("El valor de pi serial es %f\n", value);
+}
 
+static void BM_piOmp1(benchmark::State& state) {
+    double value;
+    for (auto _ : state) {
+        value = pi_omp1();
+    }
+    std::printf("El valor de pi paralelo es %f\n", value);
+}
+
+static void BM_piOmp2(benchmark::State& state) {
+    double value;
+    for (auto _ : state) {
+        value = pi_omp1_parallelFor();
+    }
+    std::printf("El valor de pi for paralelo es %f\n", value);
+}
+
+BENCHMARK(BM_piSerial)
+        ->Unit(benchmark::kMillisecond)
+        ->Iterations(1)
+        ->Repetitions(5);
+
+BENCHMARK(BM_piOmp1)
+        ->Unit(benchmark::kMillisecond)
+        ->Iterations(1)
+        ->Repetitions(5);
+
+BENCHMARK(BM_piOmp2)
+        ->Unit(benchmark::kMillisecond)
+        ->Iterations(1)
+        ->Repetitions(5);
+
+int main(int argc, char** argv){
+    ::benchmark::Initialize(&argc, argv);
+    if (::benchmark::ReportUnrecognizedArguments(argc, argv)) return 1;
+    ::benchmark::RunSpecifiedBenchmarks();
+    ::benchmark::Shutdown();
     return 0;
 }
