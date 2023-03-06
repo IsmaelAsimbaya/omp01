@@ -1,0 +1,78 @@
+{
+	"configurations" : 
+	[
+		{
+			"directories" : 
+			[
+				{
+					"build" : ".",
+					"jsonFile" : "directory-.-Release-d0094a50bb2071803777.json",
+					"minimumCMakeVersion" : 
+					{
+						"string" : "3.24"
+					},
+					"projectIndex" : 0,
+					"source" : ".",
+					"targetIndexes" : 
+					[
+						0,
+						1,
+						2
+					]
+				}
+			],
+			"name" : "Release",
+			"projects" : 
+			[
+				{
+					"directoryIndexes" : 
+					[
+						0
+					],
+					"name" : "omp01",
+					"targetIndexes" : 
+					[
+						0,
+						1,
+						2
+					]
+				}
+			],
+			"targets" : 
+			[
+				{
+					"directoryIndex" : 0,
+					"id" : "correcion::@6890427a1f51a3e7e1df",
+					"jsonFile" : "target-correcion-Release-b9e6a5227932a446b7c5.json",
+					"name" : "correcion",
+					"projectIndex" : 0
+				},
+				{
+					"directoryIndex" : 0,
+					"id" : "omp01::@6890427a1f51a3e7e1df",
+					"jsonFile" : "target-omp01-Release-cda33ed55bd8fdc21bed.json",
+					"name" : "omp01",
+					"projectIndex" : 0
+				},
+				{
+					"directoryIndex" : 0,
+					"id" : "repaso::@6890427a1f51a3e7e1df",
+					"jsonFile" : "target-repaso-Release-8109e15fdf29c5e973f5.json",
+					"name" : "repaso",
+					"projectIndex" : 0
+				}
+			]
+		}
+	],
+	"kind" : "codemodel",
+	"paths" : 
+	{
+		"build" : "C:/Users/User/CLionProjects/omp01/cmake-build-release",
+		"source" : "C:/Users/User/CLionProjects/omp01"
+	},
+	"version" : 
+	{
+		"major" : 2,
+		"minor" : 4
+	}
+}

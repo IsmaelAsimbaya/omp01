@@ -1,0 +1,3 @@
+"C:\Program Files\JetBrains\CLion 2022.3.1\bin\cmake\win\x64\bin\cmake.exe" -E rm -f CMakeFiles\repaso.dir/objects.a
+C:\clang64\bin\llvm-ar.exe qc CMakeFiles\repaso.dir/objects.a @CMakeFiles\repaso.dir\objects1.rsp
+C:\clang64\bin\c++.exe  -fopenmp -O3 -DNDEBUG -Wl,--whole-archive CMakeFiles\repaso.dir/objects.a -Wl,--no-whole-archive -o repaso.exe -Wl,--out-implib,librepaso.dll.a -Wl,--major-image-version,0,--minor-image-version,0 @CMakeFiles\repaso.dir\linklibs.rsp

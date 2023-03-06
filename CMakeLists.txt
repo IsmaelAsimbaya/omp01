@@ -7,5 +7,6 @@ set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -fopenmp")
 
 add_executable(omp01 main.cpp)
 add_executable(repaso repaso.cpp)
+add_executable(correcion correccion.cpp)
 
 target_link_libraries(omp01  benchmark)

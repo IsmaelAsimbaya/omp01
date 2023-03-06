@@ -1,0 +1,5 @@
+C:/Users/User/CLionProjects/omp01/cmake-build-release/CMakeFiles/omp01.dir
+C:/Users/User/CLionProjects/omp01/cmake-build-release/CMakeFiles/repaso.dir
+C:/Users/User/CLionProjects/omp01/cmake-build-release/CMakeFiles/correcion.dir
+C:/Users/User/CLionProjects/omp01/cmake-build-release/CMakeFiles/edit_cache.dir
+C:/Users/User/CLionProjects/omp01/cmake-build-release/CMakeFiles/rebuild_cache.dir
